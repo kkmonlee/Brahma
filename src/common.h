@@ -1,13 +1,13 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-typedef uint64_t u64;
-
 #include <cstdint>
 #include <chrono>
 #include <string>
 
 #define USE_INLINE_ASM true
+
+typedef uint64_t u64;
 
 const int WHITE = 0;
 const int BLACK = 1;

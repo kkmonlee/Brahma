@@ -53,6 +53,29 @@ int count(uint64_t bb) {
     #endif
 }
 
-// TODO: Parallel-prefix algorithm
-// TODO: Convert square number to 64-bit integer
-// TODO: Get time elapsed
+// Flips a board across middle ranks (white to black, vice versa)
+uint64_t flipAcrossRanks(uint64_t bb) {
+    #if USE_INLINE_ASM
+        asm("bswapq %0" : "=r" (bb) : "0" (bb));
+        return bb;
+    #else
+        bb = ((bb >> 8) & 0x00FF00FF00FF00FF) | ((bb & 0x00FF00FF00FF00FF) << 8);
+        bb = ((bb >> 16) & 0x00FF00FF00FF00FF) | ((bb & 0x00FF00FF00FF00FF) << 16);
+        bb = (bb >> 32) | (bb << 32);
+        return bb;
+    #endif
+}
+
+uint64_t indexToBit(int sq) {
+    return 1ull << sq;
+}
+
+std::string moveToString(Move m) {
+    char startFile = 'a' + (getStartSq(m) & 7);
+    char startRank = '1' + (getStartSq(m) >> 3);
+    char endFile = 'a' + (getEndSq(m) & 7);
+    char endRank = '1' + (getEndSq(m) >> 3);
+    std::string moveStr = {startFile, startRank, endFile, endRank};
+    if (getPromotion(m)) moveStr += " nbrq"[getPromotion(m)];
+    return moveStr;
+}
