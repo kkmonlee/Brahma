@@ -70,6 +70,12 @@ uint64_t indexToBit(int sq) {
     return 1ull << sq;
 }
 
+uint64_t getTimeElapsed(ChessTime time) {
+    auto endTime = ChessClock::now();
+    std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+    return (uint64_t) timeSpan.count() + 1;
+}
+
 std::string moveToString(Move m) {
     char startFile = 'a' + (getStartSq(m) & 7);
     char startRank = '1' + (getStartSq(m) >> 3);
