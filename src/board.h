@@ -39,7 +39,7 @@ struct PieceMoveList {
 
     ~PieceMoveList() {}
 
-    unsigned int size {
+    unsigned int size() {
         return length;
     }
 
@@ -97,4 +97,4 @@ public:
 
     int getMaterial(int colour);
 
-}
+};

@@ -1,6 +1,5 @@
 #include "common.h"
 
-// Bit-scan reverse
 const int index64[64] = {
     0,  47,  1, 56, 48, 27,  2, 60,
     57, 49, 41, 37, 28, 16,  3, 61,
@@ -12,7 +11,6 @@ const int index64[64] = {
     13, 18,  8, 12,  7,  6,  5, 63
 };
 
-// BSF algorithm
 int bitScanForward(uint64_t bb) {
     #if USE_INLINE_ASM
         asm ("bsfq %1, %0" : "=r" (bb) : "r" (bb));
@@ -24,7 +22,6 @@ int bitScanForward(uint64_t bb) {
     #endif
 }
 
-// BSR algorithm
 int bitScanReverse(uint64_t bb) {
     #if USE_INLINE_ASM
         asm ("bsfq %1, %0" : "=r" (bb) : "r" (bb));
@@ -53,7 +50,6 @@ int count(uint64_t bb) {
     #endif
 }
 
-// Flips a board across middle ranks (white to black, vice versa)
 uint64_t flipAcrossRanks(uint64_t bb) {
     #if USE_INLINE_ASM
         asm("bswapq %0" : "=r" (bb) : "0" (bb));
@@ -70,9 +66,9 @@ uint64_t indexToBit(int sq) {
     return 1ull << sq;
 }
 
-uint64_t getTimeElapsed(ChessTime time) {
+uint64_t getTimeElapsed(ChessTime startTime) {
     auto endTime = ChessClock::now();
-    std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+    auto timeSpan = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
     return (uint64_t) timeSpan.count() + 1;
 }
 

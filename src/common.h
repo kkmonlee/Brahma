@@ -5,7 +5,7 @@
 #include <chrono>
 #include <string>
 
-#define USE_INLINE_ASM true
+#define USE_INLINE_ASM false
 
 typedef uint64_t u64;
 
@@ -18,21 +18,15 @@ const int ROOKS = 3;
 const int QUEENS = 4;
 const int KINGS = 5;
 
-// Search score
 const int MATE_SCORE = 32766;
 const int INFTY = 32767;
-
-// Other values
 const int MAX_DEPTH = 127;
 const int MAX_MOVES = 256;
-
-// Timing
 typedef std::chrono::high_resolution_clock ChessClock;
 typedef std::chrono::high_resolution_clock::time_point ChessTime;
 
 u64 getTimeElapsed(ChessTime startTime);
 
-// Bitboard methods
 int bitScanForward(u64 bb);
 int bitScanReverse(u64 bb);
 int count(u64 bb);
@@ -43,7 +37,6 @@ inline int relativeRank(int c, int r) {
     return (r ^ (7 * c));
 }
 
-// Moves (16-bit unsigned int)
 typedef uint16_t Move;
 
 const Move NULL_MOVE = 0;
