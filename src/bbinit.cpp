@@ -19,8 +19,23 @@ const int EAST_WEST_FILL = 1;
 const int NE_SW_FILL = 9;
 const int NW_SE_FILL = 7;
 
-uint64_t fillRayRight(uint64_t rayPieces, uint64_t empty, int shift);
-uint64_t fillRayLeft(uint64_t rayPieces, uint64_t empty, int shift);
+uint64_t fillRayRight(uint64_t rayPieces, uint64_t empty, int shift) {
+    rayPieces |= empty & (rayPieces << shift);
+    empty &= (empty << shift);
+    rayPieces |= empty & (rayPieces << (2 * shift));
+    empty &= (empty << (2 * shift));
+    rayPieces |= empty & (rayPieces << (4 * shift));
+    return rayPieces;
+}
+
+uint64_t fillRayLeft(uint64_t rayPieces, uint64_t empty, int shift) {
+    rayPieces |= empty & (rayPieces >> shift);
+    empty &= (empty >> shift);
+    rayPieces |= empty & (rayPieces >> (2 * shift));
+    empty &= (empty >> (2 * shift));
+    rayPieces |= empty & (rayPieces >> (4 * shift));
+    return rayPieces;
+}
 
 static uint64_t ROOK_MASK[64];
 static uint64_t BISHOP_MASK[64];

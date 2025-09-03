@@ -108,4 +108,7 @@ struct MagicInfo {
 void initMagicTables(uint64_t seed);
 void initInBetweenTable();
 
+uint64_t ratt(int sq, uint64_t block);
+uint64_t batt(int sq, uint64_t block);
+
 #endif

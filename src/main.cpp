@@ -1,5 +1,6 @@
 #include "common.h"
 #include "bbinit.h"
+#include "board.h"
 #include <iostream>
 
 int main() {
@@ -14,11 +15,19 @@ int main() {
     int bits = count(0xFF);
     std::cout << "Popcount of 0xFF: " << bits << std::endl;
     
-    std::cout << "Initializing magic tables..." << std::endl;
+    std::cout << "Initializing systems..." << std::endl;
+    initZobristTable();
     initMagicTables(12345);
-    
-    std::cout << "Initializing in-between table..." << std::endl;
     initInBetweenTable();
+    
+    std::cout << "Creating board..." << std::endl;
+    Board board;
+    
+    std::cout << "White material: " << board.getMaterial(WHITE) << std::endl;
+    std::cout << "Black material: " << board.getMaterial(BLACK) << std::endl;
+    
+    std::cout << "White in check: " << (board.isInCheck(WHITE) ? "Yes" : "No") << std::endl;
+    std::cout << "Black in check: " << (board.isInCheck(BLACK) ? "Yes" : "No") << std::endl;
     
     std::cout << "All systems initialized successfully!" << std::endl;
     

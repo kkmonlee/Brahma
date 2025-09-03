@@ -97,4 +97,21 @@ public:
 
     int getMaterial(int colour);
 
+private:
+    uint64_t pieces[2][6];  // [color][piece_type]
+    uint64_t allPieces[2];  // [color] 
+    uint8_t castlingRights;
+    uint16_t epCaptureFile;
+    int fiftyMoveCounter;
+    int moveNumber;
+    int playerToMove;
+    uint64_t zobristKey;
+    
+    uint64_t calculateZobristKey();
+    bool isSquareAttacked(int sq, int byColour);
+    uint64_t getPawnAttacks(int sq, int colour);
+    uint64_t getRookAttacks(int sq, uint64_t occ);
+    uint64_t getBishopAttacks(int sq, uint64_t occ);
 };
+
+#endif
