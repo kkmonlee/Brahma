@@ -53,7 +53,6 @@ uint64_t batt(int sq, uint64_t block);
 int magicMap(uint64_t masked, uint64_t magic, int nBits);
 uint64_t findMagic(int sq, int m, bool isBishop);
 
-// Basic implementations - optimize later
 uint64_t indexToMask64(int index, int nBits, uint64_t mask) {
     uint64_t result = 0;
     for (int i = 0; i < nBits; i++) {

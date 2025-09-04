@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+extern uint64_t inBetweenSqs[64][64];
+
 const uint8_t WHITEKSIDE = 0x1;
 const uint8_t WHITEQSIDE = 0x2;
 const uint8_t BLACKKSIDE = 0x4;
@@ -96,10 +98,11 @@ public:
     void getCheckMaps(int colour, uint64_t *checkMaps);
 
     int getMaterial(int colour);
+    int getPlayerToMove() const { return playerToMove; }
 
 private:
-    uint64_t pieces[2][6];  // [color][piece_type]
-    uint64_t allPieces[2];  // [color] 
+    uint64_t pieces[2][6];
+    uint64_t allPieces[2]; 
     uint8_t castlingRights;
     uint16_t epCaptureFile;
     int fiftyMoveCounter;
@@ -112,6 +115,22 @@ private:
     uint64_t getPawnAttacks(int sq, int colour);
     uint64_t getRookAttacks(int sq, uint64_t occ);
     uint64_t getBishopAttacks(int sq, uint64_t occ);
+    
+    void generatePawnMoves(MoveList &moves, int colour, uint64_t occupied, uint64_t enemy);
+    void generatePawnCaptures(MoveList &moves, uint64_t captures, int colour, int fromOffset, int promoRank);
+    void generateEnPassantMoves(MoveList &moves, int colour);
+    void generateKnightMoves(MoveList &moves, int colour, uint64_t friendly);
+    void generateBishopMoves(MoveList &moves, int colour, uint64_t occupied, uint64_t friendly);
+    void generateRookMoves(MoveList &moves, int colour, uint64_t occupied, uint64_t friendly);
+    void generateQueenMoves(MoveList &moves, int colour, uint64_t occupied, uint64_t friendly);
+    void generateKingMoves(MoveList &moves, int colour, uint64_t occupied, uint64_t friendly);
+    void generateCastlingMoves(MoveList &moves, int colour);
+    
+    template<int PieceType>
+    void generatePieceMoves(MoveList &moves, int colour, uint64_t occupied, uint64_t friendly);
+    
+    bool canCastle(int colour, bool kingside);
+    bool isLegalMove(Move move, int colour);
 };
 
 #endif
